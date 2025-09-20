@@ -9,17 +9,15 @@
 
 body {
     margin: 0;
-    padding: 0;
     font-family: 'Comic Neue', cursive;
     background: linear-gradient(135deg, #a8e6cf, #dcedc1, #b0ffb5);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
-    color: #004d00;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    overflow-x: hidden;
+    color: #004d00;
 }
 
 @keyframes gradientBG {
@@ -29,12 +27,143 @@ body {
 }
 
 h1 {
-    margin-top: 20px;
+    margin: 20px 0 10px;
+    font-size: 2rem;
     text-align: center;
-    font-size: 2.5rem;
-    text-shadow: 2px 2px rgba(0,0,0,0.2);
+    text-shadow: 1px 1px rgba(0,0,0,0.2);
 }
 
+.update-info {
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.votes {
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.participant {
+    background: rgba(255,255,255,0.8);
+    border-radius: 20px;
+    padding: 15px 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.participant span {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.bar {
+    height: 20px;
+    border-radius: 15px;
+    background: linear-gradient(90deg, #00b300, #66ff66);
+    width: 0%;
+    transition: width 1s ease-in-out;
+}
+
+.footer {
+    margin-top: auto;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.popup {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    opacity: 0;
+    animation: popupAnim 10s infinite;
+    pointer-events: none;
+}
+
+@keyframes popupAnim {
+    0% {opacity:0; transform: translateX(-50%) translateY(-20px);}
+    10% {opacity:1; transform: translateX(-50%) translateY(0);}
+    90% {opacity:1;}
+    100% {opacity:0; transform: translateX(-50%) translateY(-20px);}
+}
+</style>
+</head>
+<body>
+
+<h1>GayNEETards Admin Election 2025 🏳️‍🌈✨️</h1>
+<div class="update-info">The Vote Counting Updated Automatically In Every One Hour</div>
+
+<div class="votes" id="votes-container">
+    <div class="participant" id="DoctorDecember">
+        <span>@DoctorDecember (u/GayCadaver) - <span id="count-DoctorDecember">4</span> Votes</span>
+        <div class="bar" id="bar-DoctorDecember"></div>
+    </div>
+    <div class="participant" id="Meethisoanpapdi">
+        <span>@Meethisoanpapdi (u/No-Mango736) - <span id="count-Meethisoanpapdi">1</span> Votes</span>
+        <div class="bar" id="bar-Meethisoanpapdi"></div>
+    </div>
+    <div class="participant" id="Saltaccount">
+        <span>@Saltaccount (u/uniprincesa) - <span id="count-Saltaccount">1</span> Votes</span>
+        <div class="bar" id="bar-Saltaccount"></div>
+    </div>
+    <div class="participant" id="Indirajeett">
+        <span>@Indirajeett (u/SpiritualStock2843) - <span id="count-Indirajeett">0</span> Votes</span>
+        <div class="bar" id="bar-Indirajeett"></div>
+    </div>
+</div>
+
+<div class="footer">Made By Thunder ⚡️ (iykyk)</div>
+<div class="popup" id="emoji-popup">🏳️‍🌈✨️🎉📊💖🔥</div>
+
+<script>
+// Vote counts
+let votes = {
+    "DoctorDecember": 4,
+    "Meethisoanpapdi": 1,
+    "Saltaccount": 1,
+    "Indirajeett": 0
+};
+
+// Get max votes for bar scaling
+function getMaxVotes() { return Math.max(...Object.values(votes), 1); }
+
+function updateVotes() {
+    let max = getMaxVotes();
+    for (let user in votes) {
+        document.getElementById(`count-${user}`).innerText = votes[user];
+        let percent = (votes[user] / max) * 100;
+        document.getElementById(`bar-${user}`).style.width = percent + '%';
+    }
+}
+
+// Auto update every hour
+setInterval(updateVotes, 3600000);
+
+// Dynamic vote update function
+function setNewVotes(newVotes) {
+    votes = newVotes;
+    updateVotes();
+}
+
+// Initial load
+updateVotes();
+
+// Emoji popup every 10s
+const popup = document.getElementById('emoji-popup');
+setInterval(() => {
+    const emojis = ["🏳️‍🌈","✨️","🎉","📊","💖","🔥"];
+    popup.innerText = emojis.sort(() => 0.5 - Math.random()).join('');
+}, 10000);
+</script>
+</body>
+</html>
 .update-info {
     margin: 10px 0;
     font-size: 1.1rem;
